@@ -931,6 +931,25 @@ declare module "three" {
   // declare var MeshBasicMaterial: MeshBasicMaterial
   declare export var RepeatWrapping: RepeatWrappingEnum
 
+
+  // | |============| |
+  //        Bones  
+  // | |============| |
+
+  declare export class Bone extends Object3D {
+    // TODO
+  }
+  declare export class Skeleton extends Object3D {
+    // TODO
+  }
+
+  // | |============| |
+  //        Meshes  
+  // | |============| |
+
+  declare export class LOD extends Object3D {
+    // TODO
+  }
 }
 
 */

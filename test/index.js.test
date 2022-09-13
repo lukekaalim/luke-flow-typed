@@ -4,7 +4,10 @@ import type { Object3D } from "three";
 */
 
 import {
-  Mesh
+  Mesh,
+  Bone,
+  Skeleton,
+  LOD,
 } from 'three';
 import {
   Sky
@@ -13,4 +16,9 @@ import {
 const myMesh = new Mesh();
 myMesh.visible;
 
-let myObject/*: Object3D*/ = new Sky();
+let myObject/*: Object3D*/ = new Bone();
+myObject = new Sky();
+myObject = new LOD();
+myObject = new Skeleton();
+
+const mySkeleton = new Skeleton();
