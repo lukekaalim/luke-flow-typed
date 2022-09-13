@@ -1,0 +1,11 @@
+[ignore]
+
+[include]
+
+[libs]
+../typed
+[lints]
+
+[options]
+
+[strict]

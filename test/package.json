@@ -1,0 +1,6 @@
+{
+  "main": "index.js",
+  "devDependencies": {
+    "flow-bin": "^0.186.0"
+  }
+}
