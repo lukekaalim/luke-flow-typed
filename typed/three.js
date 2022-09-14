@@ -9,18 +9,21 @@ declare module "three" {
     x: number;
     y: number;
 
-    add(v: Vector2): void;
-    addScalar(s: number): void;
-    addScaledVector(v: Vector2, s: number): void;
-    addVectors(a: Vector2, b: Vector2): void;
+    set(x: number, y: number): this;
+    add(v: Vector2): this;
+    addScalar(s: number): this;
+    addScaledVector(v: Vector2, s: number): this;
+    multiplyScalar(m: number): this;
+    rotateAround(center: Vector2, angle: number): this;
+    addVectors(a: Vector2, b: Vector2): this;
     angle(): number;
-    ceil(): void;
-    clamp(min: number, max: number): void;
-    clampLength(min: number, max: number): void;
-    clampScalar(min: number, max: number): void;
+    ceil(): this;
+    clamp(min: number, max: number): this;
+    clampLength(min: number, max: number): this;
+    clampScalar(min: number, max: number): this;
     clone(): Vector2;
-    copy (v: Vector2): void;
-    distanceTo(v: Vector2): void;
+    copy (v: Vector2): this;
+    distanceTo(v: Vector2): this;
     distanceToManhattan(v: Vector2): number;
     distanceToSquared(v: Vector2): number;
     divide(v: Vector2): Vector2;
@@ -80,9 +83,9 @@ declare module "three" {
     // transformDirection(matrix: Matrix): void;
     multiplyVectors(a: Vector3, b: Vector3): void;
     getCompoment(index: 0 | 1 | 2): number;
-    applyAxisAngle(axis: number, angle: number): void;
-    lerp(vector: Vector3, alpha: number): void;
-    lerpVectors(a: Vector3, b: Vector3, alpha: number): void;
+    applyAxisAngle(axis: Vector3, angle: number): this;
+    lerp(vector: Vector3, alpha: number): this;
+    lerpVectors(a: Vector3, b: Vector3, alpha: number): this;
     angleTo(vector: Vector3): number;
     setFromMatrixColumn(index: 0 | 1 | 2 | 3, matrix: Matrix4): void;
     // TODO: not sure what the return type really is here
@@ -91,7 +94,7 @@ declare module "three" {
     applyProjection(matrix: Matrix4): void;
     // TODO: does this actually use an Euler type?
     applyEuler(euler: Vector3): void;
-    applyQuaternion(quaternion: Quaternion): void;
+    applyQuaternion(quaternion: Quaternion): this;
     project(camera: Camera): void;
     unproject(camera: Camera): void;
     equals(vector: Vector3): boolean;
@@ -122,6 +125,7 @@ declare module "three" {
     normalize(): Quaternion;
     multiply(q: Quaternion): Quaternion;
     multiplyQuaternions(a: Quaternion, b: Quaternion): Quaternion;
+    slerpQuaternions(a: Quaternion, b: Quaternion, p: number): this;
     onChange(callback: Function): Quaternion;
     onChangeCallback(): Quaternion;
     premultiply(q: Quaternion): Quaternion;
@@ -165,6 +169,10 @@ declare module "three" {
 
   declare export class Box3 {
 
+  }
+
+  declare export class Box2 {
+    constructor(min: Vector2, max: Vector2): Box2
   }
 
   declare export class Sphere {
@@ -231,9 +239,9 @@ declare module "three" {
     mergeMesh(mesh: Mesh): void;
     mergeVertices(): void;
     normalize(): void;
-    rotateX(radians: number): void;
-    rotateY(radians: number): void;
-    rotateZ(radians: number): void;
+    rotateX(radians: number): this;
+    rotateY(radians: number): this;
+    rotateZ(radians: number): this;
     sortFacesByMaterialIndex(): void;
     scale(x: number, y: number, z: number): void;
     toJSON(): string;
@@ -435,7 +443,7 @@ declare module "three" {
     getWorldRotation(optionalTarget: Euler): Euler;
     getWorldDirection(optionalTarget: Vector3): Vector3;
     localToWorld(vector: Vector3): Vector3;
-    lookAt(vector: Vector3): void;
+    lookAt(vector: Vector3 | number, y?: number, z?: number): void;
     // TODO: Find out if the array type is based on the specific Object3D
     // subtype.
     raycast(raycaster: Raycaster, intersects: Array<*>): Array<*>;
@@ -473,7 +481,6 @@ declare module "three" {
     clone(): this;
     copy(source: Camera): void;
     getWorldDirection(target?: Vector3): Vector3;
-    lookAt(target: Vector3): void;
   }
 
   declare export class OrthographicCamera extends Camera {
@@ -878,6 +885,8 @@ declare module "three" {
   declare class LoadingManager {}
   declare export class Texture {
     dispose(): void;
+    encoding: string;
+    minFilter: number;
   }
   declare export class CubeTexture {}
 
@@ -921,8 +930,10 @@ declare module "three" {
     setSize(width: number, height: number, updateStyle: boolean): void;
     domElement: Element;
     shadowMap: {
+        type: string,
         enabled: boolean,
-    }
+    };
+    outputEncoding: string;
   }
 
   // declare var Geometry: Geometry
@@ -932,9 +943,9 @@ declare module "three" {
   declare export var RepeatWrapping: RepeatWrappingEnum
 
 
-  // | |============| |
-  //        Bones  
-  // | |============| |
+  // | |======================| |
+  //             Bones  
+  // | |======================| |
 
   declare export class Bone extends Object3D {
     // TODO
@@ -943,13 +954,37 @@ declare module "three" {
     // TODO
   }
 
-  // | |============| |
-  //        Meshes  
-  // | |============| |
+  // | |======================| |
+  //           Meshes  
+  // | |======================| |
 
   declare export class LOD extends Object3D {
     // TODO
   }
+
+  // | |======================| |
+  //          Shadow Map  
+  // | |======================| |
+
+  declare export var PCFSoftShadowMap: string;
+
+  // | |======================| |
+  //        Color Encoding 
+  // | |======================| |
+
+  declare export var sRGBEncoding: string;
+
+  // | |======================| |
+  //        Blending Modes 
+  // | |======================| |
+
+  declare export var AdditiveBlending: string;
+
+  // | |======================| |
+  //         Filter Modes
+  // | |======================| |
+
+  declare export var LinearFilter: number;
 }
 
 */
