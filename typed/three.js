@@ -30,7 +30,7 @@ declare module "three" {
   }
 
   declare export class Vector3 {
-    constructor(x: number, y: number, z: number): this;
+    constructor(x?: number, y?: number, z?: number): this;
 
     x: number;
     y: number;
@@ -40,14 +40,15 @@ declare module "three" {
     setX(x: number): void;
     setY(y: number): void;
     setZ(z: number): void;
-    copy(vector: this): void;
+    copy(vector: this): this;
     fromArray(array: [number, number, number], offset: number): void;
     add(vector: this): this;
     addVectors(a: this, b: this): this;
     addScaledVector(vector: this, scale: number): this;
+    addScalar(v: number): this;
     sub(vector: this): void;
     subVectors(a: this, b: this): void;
-    multiplyScalar(scalar: number): void;
+    multiplyScalar(scalar: number): this;
     divideScalar(scalar: number): void;
     negate(): this;
     dot(vector: this): void;
@@ -67,12 +68,12 @@ declare module "three" {
     clamp(min: number, max: number): void;
     clampScalar(min: number, max: number): void;
     clampLength(min: number, max: number): void;
-    floor(): void;
-    ceil(): void;
-    round(): void;
-    roundToZero(): void;
-    applyMatrix3(matrix: Matrix3): void;
-    applyMatrix4(matrix: Matrix4): void;
+    floor(): this;
+    ceil(): this;
+    round(): this;
+    roundToZero(): this;
+    applyMatrix3(matrix: Matrix3): this;
+    applyMatrix4(matrix: Matrix4): this;
     projectOnPlane(planeNormal: Vector3): void;
     projectOnVector(vector: Vector3): void;
     divide(vector: Vector3): void;
@@ -137,6 +138,7 @@ declare module "three" {
     setFromRotationMatrix(m: Matrix4): Quaternion;
     setFromUnitVectors(from: Vector3, to: Vector3): Quaternion;
     toArray(array?: [], offset?: number): [number, number, number, number];
+    identity(): this;
 
     static slerp(
       start: Quaternion,
@@ -165,10 +167,31 @@ declare module "three" {
     setPosition(v: Vector3): this;
     lookAt(eye: Vector3, target: Vector3, up: Vector3): this;
     makeRotationFromQuaternion(q: Quaternion): void;
+    identity(): this;
+    invert(): this;
+
+    compose( position : Vector3, quaternion : Quaternion, scale : Vector3 ): this;
   }
 
   declare export class Box3 {
+    constructor(min?: Vector3, max?: Vector3 ): Box3;
+    min: Vector3;
+    max: Vector3;
 
+    getCenter(target: Vector3): Vector3;
+    getSize(target: Vector3): Vector3;
+    setFromCenterAndSize(center: Vector3, size: Vector3 ): this;
+
+    applyMatrix4(matrix: Matrix4): this;
+    translate(vector: Vector3): this;
+
+    union(box: Box3): this;
+    containsPoint(point: Vector3): boolean;
+
+    isEmpty(): boolean;
+    makeEmpty(): this;
+
+    clone(): this;
   }
 
   declare export class Box2 {
@@ -522,9 +545,19 @@ declare module "three" {
     x: number;
     y: number;
     z: number,
+    setFromQuaternion(quaternion: Quaternion): this;
+    set(x: number, y: number, z: number): this;
   }
 
   declare export class SpriteMaterial extends Material {
+    constructor({
+      color?: Color;
+      alphaMap?: ?Texture;
+      map?: ?Texture;
+      rotation?: number;
+      sizeAttenuation?: boolean;
+    }): this;
+
     color: Color;
     alphaMap: Texture;
     map: Texture;
@@ -942,6 +975,21 @@ declare module "three" {
   // declare var MeshBasicMaterial: MeshBasicMaterial
   declare export var RepeatWrapping: RepeatWrappingEnum
 
+  // | |======================| |
+  //             Geometry  
+  // | |======================| |
+
+  declare export class EdgesGeometry extends Geometry {
+
+  }
+
+  // | |======================| |
+  //             Material  
+  // | |======================| |
+
+  declare export class LineBasicMaterial extends Material {
+
+  }
 
   // | |======================| |
   //             Bones  
@@ -985,6 +1033,26 @@ declare module "three" {
   // | |======================| |
 
   declare export var LinearFilter: number;
+
+  // | |======================| |
+  //            Helpers
+  // | |======================| |
+
+  declare export class Box3Helper extends Object3D {
+    constructor(box?: Box3D, color?: string | Color): Box3Helper;
+  }
+  declare export class AxesHelper extends Object3D {
+    constructor(size?: number): Box3Helper;
+  }
+
+  // | |======================| |
+  //            Interfaces
+  // | |======================| |
+
+  declare export type IntersectionObject = {
+    point: Vector3,
+    object: Object3D,
+  }
 }
 
 */
