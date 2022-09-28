@@ -139,6 +139,7 @@ declare module "three" {
     setFromUnitVectors(from: Vector3, to: Vector3): Quaternion;
     toArray(array?: [], offset?: number): [number, number, number, number];
     identity(): this;
+    random(): this;
 
     static slerp(
       start: Quaternion,
@@ -266,9 +267,9 @@ declare module "three" {
     rotateY(radians: number): this;
     rotateZ(radians: number): this;
     sortFacesByMaterialIndex(): void;
-    scale(x: number, y: number, z: number): void;
+    scale(x: number, y: number, z: number): this;
     toJSON(): string;
-    translate(x: number, y: number, z: number): void;
+    translate(x: number, y: number, z: number): this;
   }
 
   declare type HSL = {h: number, s: number, l: number,}
@@ -789,8 +790,12 @@ declare module "three" {
   }
 
   declare export class PointsMaterial extends Material {
-    constructor({ color: string | number }): PointsMaterial,
-    color: string | number | Color,
+    constructor({
+      color?: string | number,
+      vertexColors?: boolean,
+      transparent?: boolean,
+    }): PointsMaterial,
+    color: string | number | Color;
   }
 
   declare export class MeshBasicMaterial extends Material {
@@ -979,8 +984,8 @@ declare module "three" {
   //             Geometry  
   // | |======================| |
 
-  declare export class EdgesGeometry extends Geometry {
-
+  declare export class EdgesGeometry extends BufferGeometry {
+    constructor(geometry: BufferGeometry): EdgesGeometry;
   }
 
   // | |======================| |
@@ -1039,7 +1044,7 @@ declare module "three" {
   // | |======================| |
 
   declare export class Box3Helper extends Object3D {
-    constructor(box?: Box3D, color?: string | Color): Box3Helper;
+    constructor(box?: Box3, color?: string | Color): Box3Helper;
   }
   declare export class AxesHelper extends Object3D {
     constructor(size?: number): Box3Helper;
