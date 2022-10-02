@@ -46,7 +46,7 @@ declare module "three" {
     addVectors(a: this, b: this): this;
     addScaledVector(vector: this, scale: number): this;
     addScalar(v: number): this;
-    sub(vector: this): void;
+    sub(vector: this): this;
     subVectors(a: this, b: this): void;
     multiplyScalar(scalar: number): this;
     divideScalar(scalar: number): void;
@@ -420,8 +420,6 @@ declare module "three" {
     group: number // this is a guess
   ): void;
 
-  declare class Raycaster {}
-
   declare class Layers {}
 
   declare export class Object3D {
@@ -551,7 +549,7 @@ declare module "three" {
   }
 
   declare export class SpriteMaterial extends Material {
-    constructor({
+    constructor(options?: {
       color?: Color;
       alphaMap?: ?Texture;
       map?: ?Texture;
@@ -820,7 +818,7 @@ declare module "three" {
   }
 
   declare export class MeshStandardMaterial extends Material {
-    constructor({ color: Color }): MeshStandardMaterial;
+    constructor({ color?: Color, map?: Texture }): MeshStandardMaterial;
   }
 
   declare type RepeatWrappingEnum = number
@@ -925,6 +923,8 @@ declare module "three" {
     dispose(): void;
     encoding: string;
     minFilter: number;
+    flipY: boolean;
+    flipX: boolean;
   }
   declare export class CubeTexture {}
 
@@ -979,6 +979,17 @@ declare module "three" {
   // declare var MultiMaterial: MultiMaterial
   // declare var MeshBasicMaterial: MeshBasicMaterial
   declare export var RepeatWrapping: RepeatWrappingEnum
+
+  declare export class Raycaster {
+    constructor(origin?: Vector3, direction?: Vector3, near?: number, far?: number): Raycaster;
+    setFromCamera(position: Vector2, camera: Camera): void;
+    intersectObjects(objects: $ReadOnlyArray<Object3D>, recursive?: boolean): IntersectionObject[];
+  }
+  declare export class Ray {
+    constructor(origin: Vector3, direction: Vector3): Ray;
+    origin: Vector3;
+    direction: Vector3;
+  }
 
   // | |======================| |
   //             Geometry  
@@ -1045,9 +1056,15 @@ declare module "three" {
 
   declare export class Box3Helper extends Object3D {
     constructor(box?: Box3, color?: string | Color): Box3Helper;
+    dispose(): void;
+  }
+  declare export class BoxHelper extends Object3D {
+    constructor(object: Object3D, color?: string | Color): BoxHelper;
+    dispose(): void;
   }
   declare export class AxesHelper extends Object3D {
     constructor(size?: number): Box3Helper;
+    dispose(): void;
   }
 
   // | |======================| |

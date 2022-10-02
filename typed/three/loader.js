@@ -11,6 +11,7 @@ declare module "three/examples/jsm/loaders/GLTFLoader.js" {
 
   declare export class GLTFLoader {
     load(url: string, onLoad: (data: GLTF) => mixed): void;
+    loadAsync(url: string): Promise<GLTF>;
   }
 }
 */
