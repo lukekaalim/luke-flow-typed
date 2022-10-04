@@ -984,6 +984,7 @@ declare module "three" {
     constructor(origin?: Vector3, direction?: Vector3, near?: number, far?: number): Raycaster;
     setFromCamera(position: Vector2, camera: Camera): void;
     intersectObjects(objects: $ReadOnlyArray<Object3D>, recursive?: boolean): IntersectionObject[];
+    ray: Ray;
   }
   declare export class Ray {
     constructor(origin: Vector3, direction: Vector3): Ray;
@@ -1003,8 +1004,13 @@ declare module "three" {
   //             Material  
   // | |======================| |
 
-  declare export class LineBasicMaterial extends Material {
+  declare export type LineMaterialArgs = {
+    color?: Color | string,
+  }
 
+  declare export class LineBasicMaterial extends Material {
+    constructor(args?: LineMaterialArgs): LineBasicMaterial;
+    color?: Color | string;
   }
 
   // | |======================| |
@@ -1065,6 +1071,9 @@ declare module "three" {
   declare export class AxesHelper extends Object3D {
     constructor(size?: number): Box3Helper;
     dispose(): void;
+  }
+  declare export class CameraHelper extends Object3D {
+    constructor(camera?: Camera): Box3Helper;
   }
 
   // | |======================| |

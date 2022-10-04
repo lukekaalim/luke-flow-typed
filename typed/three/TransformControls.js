@@ -10,6 +10,9 @@ declare module "three/addons/controls/TransformControls.js" {
 
     attach(object: Object3D): this;
     mode: 'translate' | 'rotate' | 'scale';
+    enabled: boolean;
+    rotationSnap: number;
+    setRotationSnap(rotationSnap: number): void;
     setMode('translate' | 'rotate' | 'scale'): void;
     getMode(): 'translate' | 'rotate' | 'scale';
 
