@@ -187,7 +187,9 @@ declare module "three" {
     translate(vector: Vector3): this;
 
     union(box: Box3): this;
+    
     containsPoint(point: Vector3): boolean;
+    intersectsBox(box: Box3): boolean;
 
     isEmpty(): boolean;
     makeEmpty(): this;
