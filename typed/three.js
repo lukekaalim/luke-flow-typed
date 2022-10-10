@@ -1047,6 +1047,13 @@ declare module "three" {
   declare export var sRGBEncoding: string;
 
   // | |======================| |
+  //        Math 
+  // | |======================| |
+
+  declare export class CubicBezierCurve3 {
+    constructor(Vector3, Vector3, Vector3, Vector3): CubicBezierCurve3;
+  }
+  // | |======================| |
   //        Blending Modes 
   // | |======================| |
 
