@@ -13,6 +13,7 @@ declare module "three" {
     add(v: Vector2): this;
     addScalar(s: number): this;
     addScaledVector(v: Vector2, s: number): this;
+    multiply(v: Vector2): this;
     multiplyScalar(m: number): this;
     rotateAround(center: Vector2, angle: number): this;
     addVectors(a: Vector2, b: Vector2): this;
@@ -134,7 +135,7 @@ declare module "three" {
     slerp(q: Quaternion, t: number): Quaternion;
     set(x: number, y: number, z: number, w: number): Quaternion;
     setFromAxisAngle(axis: Vector3, angle: number): Quaternion;
-    setFromEuler(euler: Euler): Quaternion;
+    setFromEuler(euler: Euler): this;
     setFromRotationMatrix(m: Matrix4): Quaternion;
     setFromUnitVectors(from: Vector3, to: Vector3): Quaternion;
     toArray(array?: [], offset?: number): [number, number, number, number];
@@ -182,6 +183,8 @@ declare module "three" {
     getCenter(target: Vector3): Vector3;
     getSize(target: Vector3): Vector3;
     setFromCenterAndSize(center: Vector3, size: Vector3 ): this;
+    expandByScalar(scalar: number): this;
+    expandByVector(vector: Vector3): this;
 
     applyMatrix4(matrix: Matrix4): this;
     translate(vector: Vector3): this;
@@ -198,7 +201,10 @@ declare module "three" {
   }
 
   declare export class Box2 {
-    constructor(min: Vector2, max: Vector2): Box2
+    constructor(min: Vector2, max: Vector2): Box2;
+
+    getSize(target: Vector2): Vector2;
+    getCenter(target: Vector2): Vector2;
   }
 
   declare export class Sphere {
@@ -262,6 +268,8 @@ declare module "three" {
       materialIndexOffset: number
     ): void;
     setAttribute(name: string, attribute: BufferAttribute): void;
+    getAttribute(name: string): BufferAttribute;
+
     mergeMesh(mesh: Mesh): void;
     mergeVertices(): void;
     normalize(): void;
@@ -333,7 +341,9 @@ declare module "three" {
   }
 
   declare export class BufferAttribute {
-    constructor(array: $TypedArray, itemSize: number, normalized?: boolean ): void
+    constructor(array: $TypedArray, itemSize: number, normalized?: boolean ): void;
+
+    needsUpdate: boolean;
   }
 
   declare export class Points extends Object3D {
@@ -921,13 +931,17 @@ declare module "three" {
 
   }
   declare class LoadingManager {}
+
   declare export class Texture {
     dispose(): void;
     encoding: string;
     minFilter: number;
+    magFilter: number;
+    offset: Vector2;
     flipY: boolean;
     flipX: boolean;
   }
+
   declare export class CubeTexture {}
 
   declare function TextureLoaderOnLoadCallback(texture: Texture): void;
@@ -1041,10 +1055,13 @@ declare module "three" {
   declare export var PCFSoftShadowMap: string;
 
   // | |======================| |
-  //        Color Encoding 
+  //        Texture Constants
   // | |======================| |
 
   declare export var sRGBEncoding: string;
+  declare export var NearestFilter: string;
+  declare export var LinearFilter: number;
+  declare export var NearestMipmapNearestFilter: number;
 
   // | |======================| |
   //        Math 
@@ -1058,12 +1075,6 @@ declare module "three" {
   // | |======================| |
 
   declare export var AdditiveBlending: string;
-
-  // | |======================| |
-  //         Filter Modes
-  // | |======================| |
-
-  declare export var LinearFilter: number;
 
   // | |======================| |
   //            Helpers
