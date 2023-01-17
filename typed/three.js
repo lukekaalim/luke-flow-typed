@@ -62,10 +62,10 @@ declare module "three" {
     setLength(length: number): void;
     cross(vector: Vector3): void;
     crossVectors(a: Vector3, b: Vector3): void;
-    // TODO: which matrix?
-    // setFromMatrixPosition(matrix: Matrix): void;
-    // TODO: which matrix?
-    // setFromMatrixScale(matrix: Matrix): void;
+    
+    setFromMatrixPosition(matrix: Matrix4): this;
+    setFromMatrixScale(matrix: Matrix4): this;
+
     clamp(min: number, max: number): void;
     clampScalar(min: number, max: number): void;
     clampLength(min: number, max: number): void;
@@ -171,6 +171,7 @@ declare module "three" {
     makeRotationFromQuaternion(q: Quaternion): void;
     identity(): this;
     invert(): this;
+    multiply(m: Matrix4): this;
 
     compose( position : Vector3, quaternion : Quaternion, scale : Vector3 ): this;
   }
@@ -480,7 +481,7 @@ declare module "three" {
     lookAt(vector: Vector3 | number, y?: number, z?: number): void;
     // TODO: Find out if the array type is based on the specific Object3D
     // subtype.
-    raycast(raycaster: Raycaster, intersects: Array<*>): Array<*>;
+    raycast(raycaster: Raycaster, intersects: Array<IntersectionObject>): Array<IntersectionObject>;
     // Expressed this way to ensure at least one object to remove.
     remove(object: Object3D, ...otherObjects: Array<Object3D>): void;
     rotateOnAxis(axis: Vector3, angle: number): void;
@@ -977,7 +978,8 @@ declare module "three" {
     render(
       scene: Object3D,
       camera: Camera,
-      renderTarget?: WebGLRenderTarget, forceClear?: boolean
+      renderTarget?: ?WebGLRenderTarget,
+      forceClear?: ?boolean
     ): void;
     dispose(): null;
     clear(color?: boolean, depth?: boolean, stencil?: boolean): null;
@@ -1014,6 +1016,12 @@ declare module "three" {
 
   declare export class EdgesGeometry extends BufferGeometry {
     constructor(geometry: BufferGeometry): EdgesGeometry;
+  }
+  declare export class SphereGeometry extends BufferGeometry {
+    constructor(size?: number): EdgesGeometry;
+  }
+  declare export class ConeGeometry extends BufferGeometry {
+    constructor(radius?: number, height?: number, radialSegments?: number): EdgesGeometry;
   }
 
   // | |======================| |
@@ -1103,6 +1111,7 @@ declare module "three" {
   declare export type IntersectionObject = {
     point: Vector3,
     object: Object3D,
+    distance: number,
   }
 }
 

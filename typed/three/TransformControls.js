@@ -8,6 +8,8 @@ declare module "three/addons/controls/TransformControls.js" {
   declare export class TransformControls extends Object3D {
     constructor(camera: Camera, surface: HTMLElement): TransformControls;
 
+    _gizmo: TransformControlsGizmo;
+
     attach(object: Object3D): this;
     mode: 'translate' | 'rotate' | 'scale';
     enabled: boolean;
@@ -21,6 +23,13 @@ declare module "three/addons/controls/TransformControls.js" {
     
     addEventListener('change', () => mixed): void;
     removeEventListener('change', () => mixed): void;
+  }
+  declare export class TransformControlsGizmo extends Object3D {
+    picker: {
+      translate: Object3D,
+      rotate: Object3D,
+      scale: Object3D
+    }
   }
 }
 */
