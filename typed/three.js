@@ -161,7 +161,7 @@ declare module "three" {
   }
 
   declare export class Matrix3 {
-
+    copy(m: Matrix3): this;
   }
 
   declare export class Matrix4 {
@@ -552,6 +552,7 @@ declare module "three" {
   }
 
   declare export class Euler {
+    copy(e: Euler): this;
     constructor(x?: number, y?: number, z?: number, order?: string): this;
     order: string;
     x: number;
@@ -865,7 +866,7 @@ declare module "three" {
     constructor(width: number, height: number, widthSegments?: number, heightSegments?: number): this;
   }
 
-  declare class LightShadow {
+  declare export class LightShadow {
     constructor(camera: Camera): this;
 
     camera: Camera;
