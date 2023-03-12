@@ -437,6 +437,8 @@ declare module "three" {
 
   declare export class Object3D {
     // castShadow is undefined in AmbientLight.
+    type: string,
+
     castShadow: ?boolean;
     children: Array<Object3D>;
     frustrumCulled: boolean;
@@ -466,7 +468,7 @@ declare module "three" {
     static DefaultMatrixAutoUpdate: Vector3;
     // TODO: Add event dispatcher methods
 
-    add(...os: Array<Object3D>): void;
+    add(...os: Array<Object3D>): this;
     removeFromParent(): this;
     applyMatrix(matrix: Matrix4): void;
     clone(recursive: boolean): Object3D;
