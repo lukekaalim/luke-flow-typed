@@ -14,4 +14,10 @@ declare module "three/examples/jsm/loaders/GLTFLoader.js" {
     loadAsync(url: string): Promise<GLTF>;
   }
 }
+declare module "three/addons/loaders/GLTFLoader.js" {
+  import typeof { GLTFLoader as _GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+  import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
+
+  declare export var GLTFLoader: _GLTFLoader;
+}
 */
